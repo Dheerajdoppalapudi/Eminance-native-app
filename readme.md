@@ -47,3 +47,14 @@
    ```bash
    npx expo start --clear
    ```
+
+### On Code Update (Pull)
+   ```
+   pwd
+   ```
+   Make sure that you are in this location <br>
+   ../React Native and Django/Eminance<br>
+   To install missing packages:<br>
+   ```
+   npm install
+   ```
