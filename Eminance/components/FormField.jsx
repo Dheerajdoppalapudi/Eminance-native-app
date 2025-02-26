@@ -6,6 +6,7 @@ const FormField = ({ title, value, placeholder, handleChangetext, otherstyles, .
     const [showPassword, setShowPassword] = useState(false)
     return (
         <View className={`space-y-2 ${otherstyles}`}  >
+
             <Text className='text-base text-gray-100 font-pmedium'>{title}</Text>
             <View className='border-2 w-full h-16 border-black-200 px-4 bg-darkgray rounded-2xl focus:border-secondary items-center flex-row'>
                 <TextInput
@@ -24,7 +25,7 @@ const FormField = ({ title, value, placeholder, handleChangetext, otherstyles, .
                     </TouchableOpacity>
                 )}
             </View>
-        </View>
+        </View >
     )
 }
 

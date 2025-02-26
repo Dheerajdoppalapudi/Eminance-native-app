@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity, ActivityIndicator, Alert, ScrollView, Image } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, ActivityIndicator, Alert, ScrollView, Image, Button } from 'react-native';
 import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
@@ -9,20 +9,28 @@ import CustomButton from '../../components/CustomButton';
 import { useGlobalContext } from '../../context/GlobalProvider';
 import { images } from '../../constants'
 import { Link, router } from 'expo-router'
+import * as Location from "expo-location";
 
 const Profile = () => {
 
   const { user } = useGlobalContext();
+
   const [userinfo, setUserInfo] = useState(null);
   const [userDataPosts, setUserDataPosts] = useState([])
   const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState(false);
   const [profilePic, setProfilePic] = useState(null);
+  const [location, setLocation] = useState(null);
+  const [address, setAddress] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
 
   useEffect(() => {
     setLoading(true)
+
     fetchUserProfile();
     fetchUserPosts();
+    getLocation();
+
     setLoading(false)
   }, []);
 
@@ -56,17 +64,42 @@ const Profile = () => {
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    return date.toLocaleString(); 
+    return date.toLocaleString();
   };
 
   const logout = async () => {
     try {
-      await signOut(); 
+      await signOut();
       router.replace("/sign-in");
     } catch (error) {
       console.log("Error signing out:", error);
     }
   };
+
+  const getLocation = async () => {
+    try {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        setErrorMsg("Permission to access location was denied");
+        return;
+      }
+
+      let locationData = await Location.getCurrentPositionAsync({});
+      setLocation(locationData.coords);
+
+      let addressData = await Location.reverseGeocodeAsync({
+        latitude: locationData.coords.latitude,
+        longitude: locationData.coords.longitude,
+      });
+
+      if (addressData.length > 0) {
+        setAddress(addressData[0]); // Get the first address result
+      }
+    } catch (error) {
+      Alert.alert("Error", "Could not fetch location");
+    }
+  };
+
 
   if (loading) {
     return (
@@ -103,8 +136,21 @@ const Profile = () => {
               <Text className="text-white text-xs">+</Text>
             </View>
           </TouchableOpacity>
-          <Text className='text-white text-3xl font-bold mb-4'>{user ? user.username : "User"}</Text>
+          <Text className='text-white text-3xl font-bold mb-2'>{user ? user.username : "User"}</Text>
+          <View className="mb-4">
+            {errorMsg ? (
+              <Text>{errorMsg}</Text>
+            ) : location ? (
+              <Text className="text-white">Latitude: {location.latitude}, Longitude: {location.longitude}
+                {/* <Text>Country: {address.country}</Text>
+              <Text>State: {address.region}</Text> */}
+              </Text>
+            ) : (
+              <Text className="text-white">Fetching location...</Text>
+            )}
 
+            {/* <Button title="Get Location" onPress={getLocation} /> */}
+          </View>
           <FormField
             title="Username"
             value={userinfo ? userinfo.username : ""}
@@ -142,15 +188,15 @@ const Profile = () => {
                 </View>
               ))
             )}
-            
+
           </View>
           <TouchableOpacity className={`w-full bg-vvdarkgrey rounded-xl min-h-[62px] justify-center items-center`}
-                onPress={logout}
-                activeOpacity={0.7}
-                disabled={loading}
-              >
-                <Text className={`font-psemibold text-white`}>Logout</Text>
-              </TouchableOpacity>
+            onPress={logout}
+            activeOpacity={0.7}
+            disabled={loading}
+          >
+            <Text className={`font-psemibold text-white`}>Logout</Text>
+          </TouchableOpacity>
         </View>
       </ScrollView>
     </SafeAreaView>

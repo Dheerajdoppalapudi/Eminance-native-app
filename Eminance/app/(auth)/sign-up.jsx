@@ -6,7 +6,7 @@ import FormField from '../../components/FormField'
 import CustomButton from '../../components/CustomButton'
 import { Link, router } from 'expo-router'
 import { Register } from '../../lib/appwrite'
-
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const SignUp = () => {
 
@@ -19,12 +19,11 @@ const SignUp = () => {
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const submit = async () => {
-    // setIsSubmitting(true);
     const result = await Register(form.username, form.email, form.password);
 
     if (result.success) {
       Alert.alert('Success', result.message);
-      router.replace('/sign-in'); 
+      router.replace('/sign-in');
     } else {
       Alert.alert('Error', result.message);
     }
@@ -34,7 +33,11 @@ const SignUp = () => {
 
   return (
     <SafeAreaView className="bg-primary h-full">
-      <ScrollView contentContainerStyle={{ height: '100%' }}>
+      <KeyboardAwareScrollView
+        extraScrollHeight={100}
+        enableOnAndroid={true}
+        keyboardShouldPersistTaps="handled"
+      >
         <View className="w-full justify-center min-h-[84vh] px-6 my-6">
           <Image source={images.logo} resizeMode='contain' className="w-[115px] h-[35px]" />
           <Text className='text-2xl text-white text-semibold mt-7 font-psemibold my-3'>Sign Up to Eminanace </Text>
@@ -64,7 +67,7 @@ const SignUp = () => {
             <Link href="/sign-in" className='text-lg font-psemibold text-secondary'>Sign-In</Link>
           </View>
         </View>
-      </ScrollView>
+      </KeyboardAwareScrollView>
     </SafeAreaView>
   )
 }

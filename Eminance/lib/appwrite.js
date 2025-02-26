@@ -14,12 +14,12 @@ export const Register = async (username, email, password) => {
             email,
             password,
         });
-
+        
         if (response.status === 201) {
             return { success: true, message: 'User registered successfully' };
         }
     } catch (error) {
-        console.error('Register Error:', error.response?.data || error);
+        console.log('Register Error:', error.response?.data || error);
         return { success: false, message: error.response?.data || 'Registration failed' };
     }
 };
@@ -141,7 +141,7 @@ export const UpdateUserProfile = async (updatedData) => {
             return { success: true, message: 'Profile updated successfully' };
         }
     } catch (error) {
-        console.error('Update Profile Error:', error.response?.data || error);
+        console.log('Update Profile Error:', error.response?.data || error);
         return { success: false, message: error.response?.data || 'Profile update failed' };
     }
 };
@@ -167,7 +167,7 @@ export const GetUserPosts = async () => {
             return response.data;
         }
     } catch (error) {
-        console.error('error getting user Posts:', error.response?.data || error);
+        console.log('error getting user Posts:', error.response?.data || error);
         return { success: false, message: error.response?.data || 'getting user posts Failed' };
     }
 };
@@ -185,7 +185,7 @@ export const signOut = async () => {
 
         return { success: true, message: 'Logged out successfully' };
     } catch (error) {
-        console.error('Logout Error:', error);
+        console.log('Logout Error:', error);
         return { success: false, message: 'Logout failed' };
     }
 };
