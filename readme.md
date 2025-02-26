@@ -1,3 +1,6 @@
+# App Name: Eminance 
+
+
 ### Backend Setup
 1. Clone the repository.
 2. Navigate to the backend directory:
