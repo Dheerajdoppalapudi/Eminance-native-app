@@ -61,32 +61,34 @@
 
 ### Prisma and node.js set up
 
+1. Navigate to nodejs backend directory and install dependencies
 ```
 cd nodeJs.Backend
+rm -rf node_modules package-lock.json
 npm install 
 ```
 
-Delete all the exsisting migrations
+2. Delete all the exsisting migrations
 ```
 npx prisma db push --force-reset
 ```
 
-Apply Migrations
+3. Apply Migrations
 ```
 npx prisma migrate dev
 ```
 
-Apply all the dummy data
+4. Apply all the dummy data
 ```
 npx prisma db seed
 ```
 
-Prisma Studio
+5. Prisma Studio
 ```
 npx prisma studio
 ```
 
-Start Nodejs server
+6. Start Nodejs server
 ```
 node server.js
 ```
