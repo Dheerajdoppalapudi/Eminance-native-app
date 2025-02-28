@@ -28,9 +28,11 @@ export const SignInApi = async (username, password) => {
     try {
 
         const response = await axios.post(`${API_URL}/token/`, { username, password });
-        console.log("response: ", response.data)
+        // console.log("response: ", response.data)
         if (response.status === 200) {
             const { access, refresh } = response.data;
+
+            // console.log("commnig here : ", access, refresh)
 
             await AsyncStorage.setItem('accessToken', access);
             await AsyncStorage.setItem('refreshToken', refresh);
@@ -38,7 +40,7 @@ export const SignInApi = async (username, password) => {
             return { success: true, message: 'Login successful' };
         }
     } catch (error) {
-        console.error('Login Error:', error.response?.data || error);
+        console.log('Login Error:', error.response?.data || error);
         return { success: false, message: 'Invalid credentials' };
     }
 };
@@ -46,6 +48,7 @@ export const SignInApi = async (username, password) => {
 export const getCurrentUser = async () => {
     try {
         const token = await AsyncStorage.getItem("accessToken");
+        console.log("Token: ", token)
 
         if (!token) {
             console.log("No access token found");
@@ -76,7 +79,7 @@ export const getAllPosts = async () => {
             Alert.alert(
                 "Session Expired",
                 "Your session has timed out. Please log in again.",
-                [{ text: "OK", onPress: () => router.replace("/sign-in") }] // Redirect on "OK"
+                [{ text: "OK", onPress: () => router.replace("/sign-in") }] 
             );
             return null;
         }
@@ -86,9 +89,11 @@ export const getAllPosts = async () => {
             }
         });
 
+        // console.log("Response: ", response.data)
+
         return response.data;
     } catch (error) {
-        console.log("Error fetching user profile: ", error.response ? error.response.data : error.message);
+        console.log("Error fetching posts data: ", error.response ? error.response.data : error.message);
         return null;
     }
 };
@@ -160,8 +165,6 @@ export const GetUserPosts = async () => {
                 Authorization: `Bearer ${token}`,
             },
         });
-
-        // console.log("response: ", response)
 
         if (response.status === 200) {
             return response.data;

@@ -27,7 +27,6 @@ const SignIn = () => {
     } else {
       Alert.alert('Error', result.message);
     }
-
     setIsSubmitting(false);
   };
 
@@ -35,8 +34,8 @@ const SignIn = () => {
     <SafeAreaView className="bg-primary h-full">
       <ScrollView contentContainerStyle={{ height: '100%' }}>
         <View className=" w-full justify-center min-h-[84vh] px-6 my-6">
-          <Image source={images.logo} resizeMode='contain' className="w-[115px] h-[35px]" />
-          <Text className='text-2xl text-white text-semibold mt-10 font-psemibold my-6'>Login in to Eminanace </Text>
+          <Image source={images.logo} resizeMode='contain' className="w-[185px] h-[35px]" />
+          <Text className='text-2xl text-white text-semibold mt-10 font-psemibold my-6'>Login</Text>
           <FormField
             title="Username"
             value={form.username}

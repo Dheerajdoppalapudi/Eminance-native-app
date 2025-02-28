@@ -27,7 +27,6 @@ const SignUp = () => {
     } else {
       Alert.alert('Error', result.message);
     }
-
     setIsSubmitting(false);
   };
 

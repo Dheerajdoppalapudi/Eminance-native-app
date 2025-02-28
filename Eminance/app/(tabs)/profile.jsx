@@ -46,7 +46,7 @@ const Profile = () => {
     if (userData) {
       setUserDataPosts(userData);
     }
-    console.log("userData: ", userData)
+    // console.log("userData: ", userDataPosts, "length: ", userDataPosts.length)
   };
 
   const pickImage = async () => {
@@ -99,7 +99,6 @@ const Profile = () => {
       Alert.alert("Error", "Could not fetch location");
     }
   };
-
 
   if (loading) {
     return (
