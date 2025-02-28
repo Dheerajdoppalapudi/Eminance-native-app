@@ -5,7 +5,7 @@
 1. Clone the repository.
 2. Navigate to the backend directory:
    ```bash
-   cd Django\ Authentication/
+   cd Django.Backend/
    ```
 3. Create a virtual environment and activate it:
    ```bash
@@ -58,3 +58,36 @@
    ```
    npm install
    ```
+
+### Prisma and node.js set up
+
+```
+cd nodeJs.Backend
+npm install 
+```
+
+Delete all the exsisting migrations
+```
+npx prisma db push --force-reset
+```
+
+Apply Migrations
+```
+npx prisma migrate dev
+```
+
+Apply all the dummy data
+```
+npx prisma db seed
+```
+
+Prisma Studio
+```
+npx prisma studio
+```
+
+Start Nodejs server
+```
+node server.js
+```
+
