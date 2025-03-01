@@ -24,10 +24,13 @@
     "drizzle-orm": "^0.40.0",
     "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",
+    "multer": "^1.4.5-lts.1",
     "pg": "^8.13.3",
     "pg-pool": "^3.7.1",
     "postgres": "^3.4.5",
-    "prisma": "^6.4.1"
+    "prisma": "^6.4.1",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
     "@types/pg": "^8.11.11",

@@ -14,7 +14,7 @@ export const Register = async (username, email, password) => {
             email,
             password,
         });
-        
+
         if (response.status === 201) {
             return { success: true, message: 'User registered successfully' };
         }
@@ -28,11 +28,9 @@ export const SignInApi = async (username, password) => {
     try {
 
         const response = await axios.post(`${API_URL}/token/`, { username, password });
-        // console.log("response: ", response.data)
         if (response.status === 200) {
             const { access, refresh } = response.data;
 
-            // console.log("commnig here : ", access, refresh)
 
             await AsyncStorage.setItem('accessToken', access);
             await AsyncStorage.setItem('refreshToken', refresh);
@@ -48,7 +46,7 @@ export const SignInApi = async (username, password) => {
 export const getCurrentUser = async () => {
     try {
         const token = await AsyncStorage.getItem("accessToken");
-        console.log("Token: ", token)
+        // console.log("Token: ", token)
 
         if (!token) {
             console.log("No access token found");
@@ -61,7 +59,7 @@ export const getCurrentUser = async () => {
             }
         });
 
-        console.log("User Profile: ", response.data);
+        // console.log("User Profile: ", response.data);
         return response.data;
 
     } catch (error) {
@@ -79,7 +77,7 @@ export const getAllPosts = async () => {
             Alert.alert(
                 "Session Expired",
                 "Your session has timed out. Please log in again.",
-                [{ text: "OK", onPress: () => router.replace("/sign-in") }] 
+                [{ text: "OK", onPress: () => router.replace("/sign-in") }]
             );
             return null;
         }
@@ -112,6 +110,8 @@ export const getLatestPosts = async () => {
                 Authorization: `Bearer ${token}`
             }
         });
+
+        // console.log("data: ", response.data)
 
         return response.data;
     } catch (error) {
@@ -190,5 +190,31 @@ export const signOut = async () => {
     } catch (error) {
         console.log('Logout Error:', error);
         return { success: false, message: 'Logout failed' };
+    }
+};
+
+export const createUserPosts = async (formData) => {
+    try {
+        const token = await AsyncStorage.getItem("accessToken");
+
+        if (!token) {
+            console.log("No access token found");
+            router.replace("/sign-in");
+            return null;
+        }
+
+        const response = await axios.post(`${DRONE_URL}/createposts/`, formData, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+                Authorization: `Bearer ${token}`,
+            },
+        });
+
+        if (response.status === 201) {
+            return { success: true, data: response.data };
+        }
+    } catch (error) {
+        console.log("Error creating user Posts:", error.response?.data || error);
+        return { success: false, message: error.response?.data || "Failed Creating user posts" };
     }
 };

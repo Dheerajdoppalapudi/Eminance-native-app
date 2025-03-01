@@ -14,6 +14,8 @@ const Home = () => {
   
   const {data: posts, refetch} = useAppwrite(getAllPosts)
 
+  console.log("Posts: ", posts)
+
   const {data: Latestposts} = useAppwrite(getLatestPosts)
 
   // console.log("Data: ", posts)
