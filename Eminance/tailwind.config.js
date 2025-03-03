@@ -21,7 +21,7 @@ module.exports = {
         darkgray: '#161617',
         vdarkgrey: '#303030',
         vvdarkgrey: '#131213',
-
+        Chatcomponet: '#2F2E2E',
       },
       fontFamily: {
         pthin: ["Poppins-Thin", "sans-serif"],

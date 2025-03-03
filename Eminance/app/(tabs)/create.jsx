@@ -37,7 +37,8 @@ const create = () => {
   const handleSubmit = async () => {
     try {
       const formData = new FormData();
-      if (!form.name || form.description) {
+      if (!form.name || !form.description) {
+        console.log("Form: ", form.name, form.description)
         Alert.alert(
           "Validation Error",
           "title and Description cant be Empty"
@@ -76,7 +77,7 @@ const create = () => {
       <ScrollView>
         <View className="w-full min-h-[84vh] px-6 my-6 items-center">
           <Text className="text-white text-2xl font-bold mb-4">Create Post</Text>
-          {form.image && <Image source={{ uri: form.image }} className="w-32 h-32 rounded-lg mb-4" />}
+          {form.image && <Image source={{ uri: form.image }} className="w-full h-48 rounded-lg mb-4" />}
 
           <FormField
             placeholder="Enter Post title"
